@@ -40,7 +40,7 @@ public class DeleteIntercityDriver  extends JFrame {
 	}
 
 	public DeleteIntercityDriver() throws SQLException {
-		setBounds(500, 220, 850, 550);
+		setBounds(75, 75, 850, 550);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -65,7 +65,7 @@ public class DeleteIntercityDriver  extends JFrame {
                 ConnectionClass c = new ConnectionClass();
                 try{
 
-                    ResultSet rs = c.stm.executeQuery("select * from intercity");
+                    ResultSet rs = c.stm.executeQuery("select * from intercitycabs");
                     while(rs.next()){
                         c1.add(rs.getString("driver"));
                     }
@@ -125,7 +125,7 @@ public class DeleteIntercityDriver  extends JFrame {
                             ConnectionClass c = new ConnectionClass();
                            
                             try{
-                                ResultSet rs = c.stm.executeQuery("select * from intercity where driver = '"+c1.getSelectedItem()+"'");
+                                ResultSet rs = c.stm.executeQuery("select * from intercitycabs where driver = '"+c1.getSelectedItem()+"'");
                                 if(rs.next()){
                                     l2.setText(rs.getString(2));  
                                     l3.setText(rs.getString(3));
@@ -152,7 +152,7 @@ public class DeleteIntercityDriver  extends JFrame {
                             try{
 	    			String s1 = c1.getSelectedItem(); 
                                 
-                                String q1 = "delete from intercity where driver = '"+s1+"'";
+                                String q1 = "delete from intercitycabs where driver = '"+s1+"'";
                                 c.stm.executeUpdate(q1);
                                 
                                 

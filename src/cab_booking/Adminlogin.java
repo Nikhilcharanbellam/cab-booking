@@ -92,7 +92,7 @@ public class Adminlogin  extends JFrame implements ActionListener
                 ConnectionClass obj=new ConnectionClass();
                 String name=tf1.getText();
                 String pass=p1.getText();
-                String q="SELECT * FROM admin WHERE username='" + name + "' AND password='" + pass + "'";
+                String q="SELECT * FROM admin_login WHERE username='" + name + "' AND password='" + pass + "'";
                 ResultSet rs=obj.stm.executeQuery(q);
                 if(rs.next())
                 {

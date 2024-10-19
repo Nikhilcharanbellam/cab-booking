@@ -34,7 +34,7 @@ public class ViewTruckingDetails extends JFrame {
 	}
 
 	public ViewTruckingDetails(String username)  {
-		setBounds(450, 220, 1050, 600);
+		setBounds(75, 75, 1050, 600);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -118,7 +118,7 @@ public class ViewTruckingDetails extends JFrame {
 	
                 ConnectionClass c = new ConnectionClass();
                 try{
-                    ResultSet rs = c.stm.executeQuery("select * from customer where username = '"+username+"'");
+                    ResultSet rs = c.stm.executeQuery("select * from signup where username = '"+username+"'");
                     String name = "";
                     while(rs.next()){
                         l1.setText(rs.getString("name"));

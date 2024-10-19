@@ -1,135 +1,132 @@
 package cab_booking;
 
-
-import java.awt.BorderLayout;
-import java.awt.*;
-
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Image;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import net.proteanit.sql.DbUtils;
-
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import java.sql.*;	
-import javax.swing.*;
-import java.awt.event.ActionListener;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class ViewCustomerDetails extends JFrame {
-	Connection conn = null;
-	private JPanel contentPane;
-	private JTable table;
-	private JLabel lblAvailability;
-	private JLabel lblCleanStatus;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
-	private JLabel lblRoomNumber;
-	private JLabel lblId;
-        private String username;
+    private JPanel contentPane;
+    private JTable table;
+    private String username;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ViewCustomerDetails  frame = new ViewCustomerDetails ("username");
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                ViewCustomerDetails frame = new ViewCustomerDetails("username");
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
 
+    public ViewCustomerDetails(String username) {
+        this.username = username;
+        initializeUI();
+        loadCustomerData();
+    }
+
+    private void initializeUI() {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(0, 0, 1300, 680);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
         
-	public ViewCustomerDetails (String username) throws SQLException {
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(500, 220, 900, 680);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-                
-                ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("cab_booking/images/viewall.jpg"));
-                Image i3 = i1.getImage().getScaledInstance(626, 201,Image.SCALE_DEFAULT);
-                ImageIcon i2 = new ImageIcon(i3);
-                JLabel l1 = new JLabel(i2);
-                l1.setBounds(0,450,626,201);
-                add(l1);
-                
-                ImageIcon i4 = new ImageIcon(ClassLoader.getSystemResource("cab_booking/images/viewall.jpg"));
-                Image i5 = i4.getImage().getScaledInstance(626, 201,Image.SCALE_DEFAULT);
-                ImageIcon i6 = new ImageIcon(i5);
-                JLabel l2 = new JLabel(i6);
-                l2.setBounds(615,450,626,201);
-                add(l2);
-                
-		this.username=username;
-		table = new JTable();
-		table.setBounds(0, 40, 900, 350);
-		contentPane.add(table);
-                
-                try{
-                    ConnectionClass c = new ConnectionClass();
-                        String displayCustomersql = "select * from customer  WHERE username='"+ username + "'";
-                        ResultSet rs = c.stm.executeQuery(displayCustomersql);
-                        table.setModel(DbUtils.resultSetToTableModel(rs));
-                }
-                catch(Exception e1){
-                        e1.printStackTrace();
-                }
-		
-		JButton btnNewButton = new JButton("Back");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-			}
-		});
-		btnNewButton.setBounds(390, 400, 120, 30);
-                btnNewButton.setBackground(Color.BLACK);
-                btnNewButton.setForeground(Color.WHITE);
-		contentPane.add(btnNewButton);
-		
-		lblAvailability = new JLabel("Username");
-		lblAvailability.setBounds(10, 15, 69, 14);
-		contentPane.add(lblAvailability);
-		
-		lblCleanStatus = new JLabel("Id Type");
-		lblCleanStatus.setBounds(110, 15, 76, 14);
-		contentPane.add(lblCleanStatus);
-		
-		lblNewLabel = new JLabel("Number");
-		lblNewLabel.setBounds(220, 15, 46, 14);
-		contentPane.add(lblNewLabel);
-		
-		lblNewLabel_1 = new JLabel("Name");
-		lblNewLabel_1.setBounds(320, 15, 76, 14);
-		contentPane.add(lblNewLabel_1);
+        addBackgroundImages();
 
-		
-		lblId = new JLabel("Gender");
-		lblId.setBounds(420, 15, 90, 14);
-		contentPane.add(lblId);
-                
-                JLabel l3 = new JLabel("Country");
-		l3.setBounds(520, 15, 90, 14);
-		contentPane.add(l3);
-                
-                JLabel l4 = new JLabel("Address");
-		l4.setBounds(620, 15, 90, 14);
-		contentPane.add(l4);
-                
-                JLabel l5 = new JLabel("Phone");
-		l5.setBounds(720, 15, 90, 14);
-		contentPane.add(l5);
-                
-                JLabel l6 = new JLabel("Email");
-		l6.setBounds(820, 15, 90, 14);
-		contentPane.add(l6);
-                
-                getContentPane().setBackground(Color.WHITE);
-	}
+        JLabel titleLabel = new JLabel("Customer Details");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setBounds(350, 5, 300, 30);
+        contentPane.add(titleLabel);
+
+        table = new JTable();
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(0, 40, 1000, 350);
+        contentPane.add(scrollPane);
+        
+        setupTableModel();
+
+        JButton btnBack = createBackButton();
+        contentPane.add(btnBack);
+        
+        getContentPane().setBackground(Color.WHITE);
+    }
+
+    private void addBackgroundImages() {
+        ImageIcon backgroundImage = new ImageIcon(ClassLoader.getSystemResource("cab_booking/images/viewall.jpg"));
+        Image scaledImage = backgroundImage.getImage().getScaledInstance(626, 201, Image.SCALE_DEFAULT);
+        JLabel label1 = new JLabel(new ImageIcon(scaledImage));
+        label1.setBounds(0, 450, 626, 201);
+        contentPane.add(label1);
+
+        JLabel label2 = new JLabel(new ImageIcon(scaledImage));
+        label2.setBounds(615, 450, 626, 201);
+        contentPane.add(label2);
+    }
+
+    private void setupTableModel() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Username");
+        model.addColumn("ID Type");
+        model.addColumn("Number");
+        model.addColumn("Name");
+        model.addColumn("Gender");
+        model.addColumn("Country");
+        model.addColumn("Address");
+        model.addColumn("Phone");
+        model.addColumn("Email");
+        
+        table.setModel(model);
+    }
+
+    private void loadCustomerData() {
+        try {
+            ConnectionClass connectionClass = new ConnectionClass();
+            String query = "SELECT * FROM user_details WHERE username='" + username + "'";
+            ResultSet resultSet = connectionClass.stm.executeQuery(query);
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+
+            if (resultSet.next()) {
+                Object[] rowData = new Object[columnCount];
+                for (int i = 1; i <= columnCount; i++) {
+                    rowData[i - 1] = resultSet.getObject(i);
+                }
+                ((DefaultTableModel) table.getModel()).addRow(rowData);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private JButton createBackButton() {
+        JButton btnBack = new JButton("Back");
+        btnBack.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+            }
+        });
+        btnBack.setBounds(390, 400, 120, 30);
+        btnBack.setBackground(Color.BLACK);
+        btnBack.setForeground(Color.WHITE);
+        return btnBack;
+    }
 }

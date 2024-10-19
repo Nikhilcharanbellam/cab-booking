@@ -35,7 +35,7 @@ public class AddintracityDriver extends JFrame {
 
 	public AddintracityDriver(String username) throws SQLException {
 		System.out.println(username);
-                setBounds(500, 220, 850, 550);
+                setBounds(75,75, 850, 550);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -104,7 +104,7 @@ public class AddintracityDriver extends JFrame {
 		
                 try{
                     ConnectionClass c = new ConnectionClass();
-                    ResultSet rs = c.stm.executeQuery("select * from account where username = '"+username+"'");
+                    ResultSet rs = c.stm.executeQuery("select * from signup where username = '"+username+"'");
                     while(rs.next()){
                         t7.setText(rs.getString("username"));  
                         t2.setText(rs.getString("name"));
@@ -128,7 +128,7 @@ public class AddintracityDriver extends JFrame {
                         String s6 =  t6.getText();
                        
                         
-                        String q1 = "insert into intracity values('"+s2+"','"+s3+"','"+s7+"','"+s6+"','"+s1+"')";
+                        String q1 = "insert into intracity values('"+s2+"','"+s7+"','"+s3+"','"+s6+"','"+s1+"')";
                         c.stm.executeUpdate(q1);
                         
                         JOptionPane.showMessageDialog(null, "Driver Added Successfully");

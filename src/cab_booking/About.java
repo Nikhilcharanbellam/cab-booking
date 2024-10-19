@@ -37,7 +37,7 @@ public class About extends JFrame implements ActionListener {
         l1.setForeground(Color.red);
         Font f2 = new Font("RALEWAY", Font.BOLD, 20);
         l1.setFont(f2);
-        setBounds(700, 220, 500, 550);
+        setBounds(0,75, 1800, 500);
         setLayout(null);
         setVisible(true);   
     }

@@ -29,7 +29,7 @@ public class UpdateCustomer extends JFrame {
 	}
 	public UpdateCustomer(String username) throws SQLException {
 		System.out.println(username);
-                setBounds(500, 220, 850, 550);
+                setBounds(75, 75, 850, 550);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null); 
@@ -159,7 +159,7 @@ r2.addItemListener(new ItemListener() {
 });*/
                 try{
                     ConnectionClass c = new ConnectionClass();
-                    ResultSet rs = c.stm.executeQuery("select * from customer where username = '"+username+"'");
+                    ResultSet rs = c.stm.executeQuery("select * from user_details where username = '"+username+"'");
                     if(rs.next()){
                         t1.setText(rs.getString(1)); 
                         comboBox.setSelectedItem(rs.getString(2));
@@ -182,7 +182,7 @@ r2.addItemListener(new ItemListener() {
                           
                             try{
                                 ConnectionClass cc = new ConnectionClass();
-                                ResultSet rs = cc.stm.executeQuery("select * from customer where username = '"+username+"'");
+                                ResultSet rs = cc.stm.executeQuery("select * from user_details where username = '"+username+"'");
                                 String s1 = t1.getText();
                                 String se = (String)comboBox.getSelectedItem();
                                 String s2 = t2.getText(); 
@@ -206,7 +206,7 @@ r2.addItemListener(new ItemListener() {
                                 String s8 =  t8.getText();
                                 String s9 = t9.getText(); 
                                 
-                                String q1 = "update customer set id_type = '" + se + "', number = '" + s3 + "', name = '" + s4
+                                String q1 = "update user_details set id_type = '" + se + "', number = '" + s3 + "', name = '" + s4
                     + "', gender = '" + gender + "', country = '" + s6 + "', address = '" + s7 + "', phone = '"
                     + s8 + "', email = '" + s9 + "' where username = '" + s1 + "'";
             c.stm.executeUpdate(q1);

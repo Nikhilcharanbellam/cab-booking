@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package cab_booking;
 
 import java.awt.Color;
@@ -11,131 +7,107 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
-import net.proteanit.sql.DbUtils;
+import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author nikhi
- */
 public class Intradrivers extends JFrame {
-	Connection conn = null;
-	private JPanel contentPane;
-	private JTable table;
-	private JLabel lblAvailability;
-	private JLabel lblCleanStatus;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
-	private JLabel lblRoomNumber;
-	private JLabel lblId;
-        private String username;
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Intradrivers  frame = new Intradrivers ();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    private JPanel contentPane;
+    private JTable table;
+    private JScrollPane scrollPane;
 
-        
-	public Intradrivers() throws SQLException {
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(500, 220, 900, 680);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-                
-                ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("cab_booking/images/viewall.jpg"));
-                Image i3 = i1.getImage().getScaledInstance(626, 201,Image.SCALE_DEFAULT);
-                ImageIcon i2 = new ImageIcon(i3);
-                JLabel l1 = new JLabel(i2);
-                l1.setBounds(0,450,626,201);
-                add(l1);
-                
-                ImageIcon i4 = new ImageIcon(ClassLoader.getSystemResource("cab_booking/images/viewall.jpg"));
-                Image i5 = i4.getImage().getScaledInstance(626, 201,Image.SCALE_DEFAULT);
-                ImageIcon i6 = new ImageIcon(i5);
-                JLabel l2 = new JLabel(i6);
-                l2.setBounds(615,450,626,201);
-                add(l2);
-                
-		
-		table = new JTable();
-		table.setBounds(0, 40, 900, 350);
-		contentPane.add(table);
-                
-                try{
-                    ConnectionClass c = new ConnectionClass();
-                        String displayCustomersql = "select * from intracity";
-                        ResultSet rs = c.stm.executeQuery(displayCustomersql);
-                        table.setModel(DbUtils.resultSetToTableModel(rs));
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Intradrivers frame = new Intradrivers();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                catch(Exception e1){
-                        e1.printStackTrace();
-                }
-		
-		JButton btnNewButton = new JButton("Back");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-			}
-		});
-		btnNewButton.setBounds(390, 400, 120, 30);
-                btnNewButton.setBackground(Color.BLACK);
-                btnNewButton.setForeground(Color.WHITE);
-		contentPane.add(btnNewButton);
-		
-		lblAvailability = new JLabel("Source");
-		lblAvailability.setBounds(10, 15, 69, 14);
-		contentPane.add(lblAvailability);
-		
-		lblCleanStatus = new JLabel("Destination");
-		lblCleanStatus.setBounds(200, 15, 76, 14);
-		contentPane.add(lblCleanStatus);
-		
-		lblNewLabel = new JLabel("Driver");
-		lblNewLabel.setBounds(400, 10, 86, 14);
-		contentPane.add(lblNewLabel);
-		
-		lblNewLabel_1 = new JLabel("Price");
-		lblNewLabel_1.setBounds(600, 15, 76, 14);
-		contentPane.add(lblNewLabel_1);
+            }
+        });
+    }
 
-		
-		lblId = new JLabel("Car");
-		lblId.setBounds(800, 15, 90, 14);
-		contentPane.add(lblId);
-                
-               /*JLabel l3 = new JLabel("Country");
-		l3.setBounds(520, 15, 90, 14);
-		contentPane.add(l3);
-                
-                JLabel l4 = new JLabel("Address");
-		l4.setBounds(620, 15, 90, 14);
-		contentPane.add(l4);
-                
-                JLabel l5 = new JLabel("Phone");
-		l5.setBounds(720, 15, 90, 14);
-		contentPane.add(l5);
-                
-                JLabel l6 = new JLabel("Email");
-		l6.setBounds(820, 15, 90, 14);
-		contentPane.add(l6);
-                */
-                getContentPane().setBackground(Color.WHITE);
-	}
+    public Intradrivers() throws SQLException {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(0, 0, 1300, 680);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        JLabel titleLabel = new JLabel("Intra City Drivers");
+        titleLabel.setBounds(10, 10, 300, 30);
+        titleLabel.setFont(titleLabel.getFont().deriveFont(24.0f));
+        contentPane.add(titleLabel);
+
+        ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("cab_booking/images/viewall.jpg"));
+        Image i3 = i1.getImage().getScaledInstance(626, 201, Image.SCALE_DEFAULT);
+        ImageIcon i2 = new ImageIcon(i3);
+        JLabel l1 = new JLabel(i2);
+        l1.setBounds(0, 450, 626, 201);
+        contentPane.add(l1);
+
+        ImageIcon i4 = new ImageIcon(ClassLoader.getSystemResource("cab_booking/images/viewall.jpg"));
+        Image i5 = i4.getImage().getScaledInstance(626, 201, Image.SCALE_DEFAULT);
+        ImageIcon i6 = new ImageIcon(i5);
+        JLabel l2 = new JLabel(i6);
+        l2.setBounds(615, 450, 626, 201);
+        contentPane.add(l2);
+
+        table = new JTable();
+        scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(10, 40, 860, 350);
+        contentPane.add(scrollPane);
+
+        DefaultTableModel model = new DefaultTableModel();
+        table.setModel(model);
+        model.addColumn("Source");
+        model.addColumn("Destination");
+        model.addColumn("Driver");
+        model.addColumn("Price");
+        model.addColumn("Car");
+
+        try {
+            ConnectionClass c = new ConnectionClass();
+            String displayCustomersql = "SELECT source, destination, driver, price, car FROM intracity";
+            Statement stmt = c.stm;
+            ResultSet rs = stmt.executeQuery(displayCustomersql);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+
+            while (rs.next()) {
+                Object[] row = new Object[columnCount];
+                for (int i = 1; i <= columnCount; i++) {
+                    row[i - 1] = rs.getObject(i);
+                }
+                model.addRow(row);
+            }
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+
+        JButton btnNewButton = new JButton("Back");
+        btnNewButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+            }
+        });
+        btnNewButton.setBounds(390, 400, 120, 30);
+        btnNewButton.setBackground(Color.BLACK);
+        btnNewButton.setForeground(Color.WHITE);
+        contentPane.add(btnNewButton);
+
+        getContentPane().setBackground(Color.WHITE);
+    }
 }

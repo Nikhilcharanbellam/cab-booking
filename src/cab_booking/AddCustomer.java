@@ -107,7 +107,7 @@ public class AddCustomer extends JFrame {
 		t8.setColumns(10);
                try{
                     ConnectionClass c = new ConnectionClass();
-                    ResultSet rs = c.stm.executeQuery("select * from customer where username = '"+username+"'");
+                    ResultSet rs = c.stm.executeQuery("select * from sign_up where username = '"+username+"'");
                     while(rs.next()){
                         t7.setText(rs.getString("username"));  
                         t2.setText(rs.getString("name"));
@@ -133,7 +133,7 @@ public class AddCustomer extends JFrame {
                         String s8 =  t6.getText();
                         String s9 = t7.getText();
                         String s10 = t8.getText();                       
-                        String q1 = "insert into customer values('"+s9+"','"+s1+"','"+s2+"','"+s3+"','"+s4+"','"+s5+"','"+s7+"','"+s8+"','"+s10+"')";
+                        String q1 = "insert into user_details values('"+s9+"','"+s1+"','"+s2+"','"+s3+"','"+s4+"','"+s5+"','"+s7+"','"+s8+"','"+s10+"')";
                         c.stm.executeUpdate(q1);                        
                         JOptionPane.showMessageDialog(null, "Customer Added Successfully");
                         setVisible(false);

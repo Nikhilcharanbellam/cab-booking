@@ -7,7 +7,7 @@ public class CheckBill extends JFrame{
       new CheckBill("username").setVisible(true);
     }
     CheckBill(String username) {    
-      setBounds(550, 220, 900, 600);  
+      setBounds(75,75, 900, 600);  
       setVisible(true);
       String price1 = "0";
       String price2 = "0";
@@ -15,16 +15,16 @@ public class CheckBill extends JFrame{
       
       try{
           ConnectionClass c = new ConnectionClass();
-          ResultSet rs = c.stm.executeQuery("select * from intercab where username = '"+username+"'");
+          ResultSet rs = c.stm.executeQuery("select * from intercity_bookings where username = '"+username+"'");
           while(rs.next()){
               price1 = rs.getString("price");
           }
-          rs = c.stm.executeQuery("select * from intracab where username = '"+username+"'");
+          rs = c.stm.executeQuery("select * from intracity_bookings where username = '"+username+"'");
           while(rs.next()){
               price2 = rs.getString("price");
           }
           String name = "";
-          rs = c.stm.executeQuery("select * from customer where username = '"+username+"'");
+          rs = c.stm.executeQuery("select * from user_details where username = '"+username+"'");
           while(rs.next()){
               name = rs.getString("name");
           }
@@ -36,7 +36,7 @@ public class CheckBill extends JFrame{
       catch(Exception e){}
        try {
             ConnectionClass c = new ConnectionClass();
-            ResultSet dummyResultSet = c.stm.executeQuery("SELECT price FROM intercab WHERE username = '" + username + "'");
+            ResultSet dummyResultSet = c.stm.executeQuery("SELECT price FROM intercity_bookings WHERE username = '" + username + "'");
             if (dummyResultSet.next()) {
                 dummyResultSet.getString("price");
             }

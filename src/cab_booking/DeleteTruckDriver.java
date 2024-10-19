@@ -44,7 +44,7 @@ public class DeleteTruckDriver extends JFrame {
 	}
 
 	public DeleteTruckDriver() throws SQLException {
-		setBounds(500, 220, 850, 550);
+		setBounds(75,75, 850, 550);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -69,7 +69,7 @@ public class DeleteTruckDriver extends JFrame {
                 ConnectionClass c = new ConnectionClass();
                 try{
 
-                    ResultSet rs = c.stm.executeQuery("select * from transport");
+                    ResultSet rs = c.stm.executeQuery("select * from transport_trucks");
                     while(rs.next()){
                         c1.add(rs.getString("dname"));
                     }
@@ -129,7 +129,7 @@ public class DeleteTruckDriver extends JFrame {
                             ConnectionClass c = new ConnectionClass();
                            
                             try{
-                                ResultSet rs = c.stm.executeQuery("select * from transport where dname = '"+c1.getSelectedItem()+"'");
+                                ResultSet rs = c.stm.executeQuery("select * from transport_trucks where dname = '"+c1.getSelectedItem()+"'");
                                 if(rs.next()){
                                     l2.setText(rs.getString(5));  
                                     l3.setText(rs.getString(1));
@@ -156,7 +156,7 @@ public class DeleteTruckDriver extends JFrame {
                             try{
 	    			String s1 = c1.getSelectedItem(); 
                                 
-                                String q1 = "delete from transport where dname = '"+s1+"'";
+                                String q1 = "delete from transport_trucks where dname = '"+s1+"'";
                                 c.stm.executeUpdate(q1);
                                 
                                 

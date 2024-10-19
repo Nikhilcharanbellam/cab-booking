@@ -1,4 +1,5 @@
 package cab_booking;
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Image;
@@ -6,103 +7,117 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
-import net.proteanit.sql.DbUtils;
-public class Intracabbokkings  extends JFrame {
-	Connection conn = null;
-	private JPanel contentPane;
-	private JTable table;
-	private JLabel lblAvailability;
-	private JLabel lblCleanStatus;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
-	private JLabel lblRoomNumber;
-	private JLabel lblId;
-        private String username;
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Intracabbokkings  frame = new Intracabbokkings ();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	public Intracabbokkings() throws SQLException {	
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(500, 220, 900, 680);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-                ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("cab_booking/images/viewall.jpg"));
-                Image i3 = i1.getImage().getScaledInstance(626, 201,Image.SCALE_DEFAULT);
-                ImageIcon i2 = new ImageIcon(i3);
-                JLabel l1 = new JLabel(i2);
-                l1.setBounds(0,450,626,201);
-                add(l1);
-                ImageIcon i4 = new ImageIcon(ClassLoader.getSystemResource("cab_booking/images/viewall.jpg"));
-                Image i5 = i4.getImage().getScaledInstance(626, 201,Image.SCALE_DEFAULT);
-                ImageIcon i6 = new ImageIcon(i5);
-                JLabel l2 = new JLabel(i6);
-                l2.setBounds(615,450,626,201);
-                add(l2);
-		table = new JTable();
-		table.setBounds(0, 40, 900, 350);
-		contentPane.add(table);
-                try{
-                    ConnectionClass c = new ConnectionClass();
-                        String displayCustomersql = "select * from intracab";
-                        ResultSet rs = c.stm.executeQuery(displayCustomersql);
-                        table.setModel(DbUtils.resultSetToTableModel(rs));
+import javax.swing.table.DefaultTableModel;
+
+public class Intracabbokkings extends JFrame {
+
+    private JPanel contentPane;
+    private JTable table;
+    private JScrollPane scrollPane;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    Intracabbokkings frame = new Intracabbokkings();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                catch(Exception e1){
-                        e1.printStackTrace();
+            }
+        });
+    }
+
+    public Intracabbokkings() throws SQLException {
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(0, 0, 1300, 680);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPane.setLayout(null);
+        setContentPane(contentPane);
+
+        JLabel titleLabel = new JLabel("Intra Cab Bookings");
+        titleLabel.setBounds(10, 10, 300, 30);
+        titleLabel.setFont(titleLabel.getFont().deriveFont(24.0f));
+        contentPane.add(titleLabel);
+
+        try {
+            ImageIcon i1 = new ImageIcon(ClassLoader.getSystemResource("cab_booking/images/viewall.jpg"));
+            Image i3 = i1.getImage().getScaledInstance(626, 201, Image.SCALE_DEFAULT);
+            ImageIcon i2 = new ImageIcon(i3);
+            JLabel l1 = new JLabel(i2);
+            l1.setBounds(0, 450, 626, 201);
+            contentPane.add(l1);
+
+            ImageIcon i4 = new ImageIcon(ClassLoader.getSystemResource("cab_booking/images/viewall.jpg"));
+            Image i5 = i4.getImage().getScaledInstance(626, 201, Image.SCALE_DEFAULT);
+            ImageIcon i6 = new ImageIcon(i5);
+            JLabel l2 = new JLabel(i6);
+            l2.setBounds(615, 450, 626, 201);
+            contentPane.add(l2);
+        } catch (Exception e) {
+            System.out.println("Image loading failed. Please check the image path.");
+        }
+
+        table = new JTable();
+        scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(10, 40, 860, 350);
+        contentPane.add(scrollPane);
+
+        DefaultTableModel model = new DefaultTableModel();
+        table.setModel(model);
+
+        model.addColumn("Username");
+        model.addColumn("Driver");
+        model.addColumn("Source");
+        model.addColumn("Destination");
+        model.addColumn("Car");
+        model.addColumn("Price");
+        model.addColumn("Reference");
+
+        try {
+            ConnectionClass c = new ConnectionClass();
+            String query = "SELECT username, driver, source, destination, car, price, ref FROM intracity_bookings";
+            Statement stmt = c.stm;
+            ResultSet rs = stmt.executeQuery(query);
+
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+
+            while (rs.next()) {
+                Object[] row = new Object[columnCount];
+                for (int i = 1; i <= columnCount; i++) {
+                    row[i - 1] = rs.getObject(i);
                 }
-		JButton btnNewButton = new JButton("Back");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-			}
-		});
-		btnNewButton.setBounds(390, 400, 120, 30);
-                btnNewButton.setBackground(Color.BLACK);
-                btnNewButton.setForeground(Color.WHITE);
-		contentPane.add(btnNewButton);
-		lblAvailability = new JLabel("Username");
-		lblAvailability.setBounds(10, 15, 69, 14);
-		contentPane.add(lblAvailability);
-		lblCleanStatus = new JLabel("Driver");
-		lblCleanStatus.setBounds(110, 15, 76, 14);
-		contentPane.add(lblCleanStatus);
-		lblNewLabel = new JLabel("Source");
-		lblNewLabel.setBounds(220, 15, 46, 14);
-		contentPane.add(lblNewLabel);
-		lblNewLabel_1 = new JLabel("Destination");
-		lblNewLabel_1.setBounds(350, 15, 76, 14);
-		contentPane.add(lblNewLabel_1);
-		lblId = new JLabel("Car");
-		lblId.setBounds(500, 15, 90, 14);
-		contentPane.add(lblId);
-                JLabel l3 = new JLabel("Type");
-		l3.setBounds(600, 15, 90, 14);
-		contentPane.add(l3);
-                JLabel l4 = new JLabel("Price");
-		l4.setBounds(700, 15, 90, 14);
-		contentPane.add(l4);
-                JLabel l5 = new JLabel("ref");
-		l5.setBounds(800, 15, 90, 14);
-		contentPane.add(l5);
-                getContentPane().setBackground(Color.WHITE);
-	}
+                model.addRow(row);
+            }
+
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+
+        JButton btnBack = new JButton("Back");
+        btnBack.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+            }
+        });
+        btnBack.setBounds(390, 400, 120, 30);
+        btnBack.setBackground(Color.BLACK);
+        btnBack.setForeground(Color.WHITE);
+        contentPane.add(btnBack);
+
+        contentPane.setBackground(Color.WHITE);
+    }
 }

@@ -69,7 +69,7 @@ public class SignUp extends JFrame implements ActionListener
         
         f.setVisible(true);
         f.setSize(550,340);
-        f.setLocation(400,300);
+        f.setLocation(300,100);
         
     }
     @Override

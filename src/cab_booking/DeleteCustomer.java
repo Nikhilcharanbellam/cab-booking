@@ -17,9 +17,6 @@ import java.awt.event.ActionEvent;
 public class DeleteCustomer extends JFrame {
 	private JPanel contentPane;
         Choice c1;
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -34,7 +31,7 @@ public class DeleteCustomer extends JFrame {
 	}
 
 	public DeleteCustomer() throws SQLException {
-		setBounds(500, 220, 850, 550);
+		setBounds(75,75, 850, 550);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -59,7 +56,7 @@ public class DeleteCustomer extends JFrame {
                 ConnectionClass c = new ConnectionClass();
                 try{
 
-                    ResultSet rs = c.stm.executeQuery("select * from customer");
+                    ResultSet rs = c.stm.executeQuery("select * from user_details");
                     while(rs.next()){
                         c1.add(rs.getString("username"));
                     }
@@ -143,7 +140,7 @@ public class DeleteCustomer extends JFrame {
                             ConnectionClass c = new ConnectionClass();
                            
                             try{
-                                ResultSet rs = c.stm.executeQuery("select * from customer where username = '"+c1.getSelectedItem()+"'");
+                                ResultSet rs = c.stm.executeQuery("select * from user_details where username = '"+c1.getSelectedItem()+"'");
                                 if(rs.next()){
                                     l2.setText(rs.getString(2));  
                                     l3.setText(rs.getString(3));
@@ -172,8 +169,8 @@ public class DeleteCustomer extends JFrame {
                             try{
 	    			String s1 = c1.getSelectedItem(); 
                                 
-                                String q1 = "delete from customer where username = '"+s1+"'";
-                                String q2 = "delete from account where username = '"+s1+"'";
+                                String q1 = "delete from user_details where username = '"+s1+"'";
+                                String q2 = "delete from signup where username = '"+s1+"'";
                                 c.stm.executeUpdate(q1);
                                 c.stm.executeUpdate(q2);
                                 
@@ -205,7 +202,7 @@ public class DeleteCustomer extends JFrame {
                 btnExit.setBackground(Color.BLACK);
                 btnExit.setForeground(Color.WHITE);
 		contentPane.add(btnExit);
-                
+     
                 getContentPane().setBackground(Color.WHITE);
 	}
 }

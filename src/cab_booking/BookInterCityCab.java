@@ -75,13 +75,13 @@ public class BookInterCityCab extends JFrame{
         
         try{
             ConnectionClass c = new ConnectionClass();
-            ResultSet rs = c.stm.executeQuery("select DISTINCT source, destination from intercity");
+            ResultSet rs = c.stm.executeQuery("select DISTINCT source, destination from intercitycabs");
             while(rs.next()){
                 c1.add(rs.getString("source"));
                 c2.add(rs.getString("destination"));
             }
             
-            rs = c.stm.executeQuery("select * from account where username = '"+username+"'");
+            rs = c.stm.executeQuery("select * from signup where username = '"+username+"'");
             while(rs.next()){
                 l10.setText(rs.getString("name"));
                 l12.setText(username);
@@ -97,9 +97,9 @@ public class BookInterCityCab extends JFrame{
 	add(l1);
         
         Choice c3 = new Choice();
-        c3.add("Micro");
-        c3.add("Mini");
-        c3.add("SUV");
+        c3.add("Premium");
+        c3.add("Luxury");
+        c3.add("Economy");
         c3.setBounds(200, 250, 150, 27);
         add(c3);
         
@@ -169,8 +169,8 @@ public class BookInterCityCab extends JFrame{
                     
                     ConnectionClass c = new ConnectionClass();
                     
-                    String str = "select * from customer where username = '"+username+"'";
-                    String str2 = "select * from intercity where destination = '"+dst+"' AND type = '"+c3.getSelectedItem()+"'";
+                    String str = "select * from user_details where username = '"+username+"'";
+                    String str2 = "select * from intercitycabs where destination = '"+dst+"' AND type = '"+c3.getSelectedItem()+"'";
                     ResultSet rs = c.stm.executeQuery(str2);
                     if(rs.next()){
                         l6.setText(rs.getString("driver"));
@@ -211,9 +211,9 @@ public class BookInterCityCab extends JFrame{
                     
                     ConnectionClass c = new ConnectionClass();
                     
-                    c.stm.executeUpdate("delete from interCab");
+                    //c.stm.executeUpdate("delete from intercitycabs");
                     
-                    String str = "insert into interCab values('"+username+"', '"+driver+"' ,'"+src+"','"+dst+"','"+type+"', '"+car+"','"+price+"', '"+ref+"')";
+                    String str = "insert into intercity_bookings values('"+username+"', '"+driver+"' ,'"+src+"','"+dst+"','"+type+"', '"+car+"','"+price+"', '"+ref+"')";
                     c.stm.executeUpdate(str);
                     
                     JOptionPane.showMessageDialog(null, "Cab Booked Successfully");
@@ -240,7 +240,7 @@ public class BookInterCityCab extends JFrame{
         
         
 	setSize(860,600);
-        setLocation(500,220);
+        setLocation(75,75);
 	setVisible(true);
 		
     }

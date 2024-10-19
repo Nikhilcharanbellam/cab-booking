@@ -44,7 +44,7 @@ public class DeleteIntracitydriver   extends JFrame {
 	}
 
 	public DeleteIntracitydriver() throws SQLException {
-		setBounds(500, 220, 850, 550);
+		setBounds(75,75, 850, 550);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

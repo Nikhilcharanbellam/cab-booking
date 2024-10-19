@@ -41,7 +41,7 @@ public class AddTruckDriver extends JFrame {
 
 	public AddTruckDriver(String username) throws SQLException {
 		System.out.println(username);
-                setBounds(500, 220, 850, 550);
+                setBounds(75,75, 850, 550);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -53,7 +53,7 @@ public class AddTruckDriver extends JFrame {
                 l1.setBounds(400,20,450,420);
                 add(l1);
 		
-		JLabel lblName = new JLabel("NEW TRUCK DRIVER FORM");
+		JLabel lblName = new JLabel("NEW TRUCK DRIVER");
 		lblName.setFont(new Font("Yu Mincho", Font.PLAIN, 20));
 		lblName.setBounds(118, 11, 260, 53);
 		contentPane.add(lblName);
@@ -121,7 +121,7 @@ public class AddTruckDriver extends JFrame {
 		
                 try{
                     ConnectionClass c = new ConnectionClass();
-                    ResultSet rs = c.stm.executeQuery("select * from account where username = '"+username+"'");
+                    ResultSet rs = c.stm.executeQuery("select * from signup where username = '"+username+"'");
                     while(rs.next()){
                         t7.setText(rs.getString("username"));  
                         t2.setText(rs.getString("name"));
@@ -145,7 +145,7 @@ public class AddTruckDriver extends JFrame {
                         String s6 =  t6.getText();
                        
                         
-                        String q1 = "insert into intercity values('"+s3+"','"+s6+"','"+s2+"','"+s7+"','"+s4+"','"+s1+"')";
+                        String q1 = "insert into transport_trucks values('"+s3+"','"+s6+"','"+s7+"','"+s4+"','"+s2+"','"+s1+"')";
                         c.stm.executeUpdate(q1);
                         
                         JOptionPane.showMessageDialog(null, "Driver Added Successfully");

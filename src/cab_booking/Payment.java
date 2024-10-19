@@ -14,7 +14,7 @@ public class Payment extends JFrame{
     public Payment(){
                 
         setLayout(null);
-        setBounds(600, 220, 800, 600);
+        setBounds(75, 75, 800, 600);
         
         JLabel label=new JLabel("Pay the payment");
         label.setFont(new Font("Raleway", Font.BOLD, 40));

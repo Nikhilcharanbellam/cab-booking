@@ -20,7 +20,7 @@ public class ForgotPassword extends JFrame implements ActionListener{
 
     public ForgotPassword() {
 
-        setBounds(500, 200, 850, 400);
+        setBounds(200, 200, 850, 400);
 	contentPane = new JPanel();
 	contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 	setContentPane(contentPane);
@@ -132,7 +132,7 @@ public class ForgotPassword extends JFrame implements ActionListener{
         try{
             ConnectionClass con = new ConnectionClass();
             if(ae.getSource() == b1){
-                String sql = "select * from account where username=?";
+                String sql = "select * from save_password where username=?";
 		PreparedStatement st = con.con.prepareStatement(sql);
 
 		st.setString(1, t1.getText());
@@ -145,7 +145,7 @@ public class ForgotPassword extends JFrame implements ActionListener{
 
             }
             if(ae.getSource() == b2){
-                String sql = "select * from account where answer=?";
+                String sql = "select * from save_password where answer=?";
 		PreparedStatement st = con.con.prepareStatement(sql);
 
 		st.setString(1, t4.getText());

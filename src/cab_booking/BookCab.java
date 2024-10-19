@@ -159,7 +159,7 @@ public class BookCab extends JFrame{
                     
                     ConnectionClass c = new ConnectionClass();
                     
-                    String str = "select * from customer where username = '"+username+"'";
+                    String str = "select * from user_details where username = '"+username+"'";
                     String str2 = "select * from intracity where destination = '"+dst+"'";
                     ResultSet rs = c.stm.executeQuery(str2);
                     
@@ -197,8 +197,7 @@ public class BookCab extends JFrame{
                 String car = l6.getText();
                 String ref = l14.getText();
                 ConnectionClass c = new ConnectionClass();
-                c.stm.executeUpdate("delete from intraCab");
-                String str = "insert into intraCab values('"+username+"','" + name1 + "','" + src + "','" + dst + "','" + car + "','" + price + "','" + ref + "')";
+                String str = "insert into intracity_bookings values('"+username+"','" + name1 + "','" + src + "','" + dst + "','" + car + "','" + price + "','" + ref + "')";
                 c.stm.executeUpdate(str);
                 JOptionPane.showMessageDialog(null, "Cab Booked Successfully");
                 setVisible(false);
@@ -222,7 +221,7 @@ public class BookCab extends JFrame{
         
         
 	setSize(860,600);
-        setLocation(500,220);
+        setLocation(75,75);
 	setVisible(true);
 		
     }

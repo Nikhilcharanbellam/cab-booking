@@ -37,7 +37,7 @@ public class SecurityPassword  extends JFrame {
 
 	public SecurityPassword(String username) throws SQLException {
 		System.out.println(username);
-                setBounds(500, 220, 850, 550);
+                setBounds(75, 75, 850, 550);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -112,7 +112,7 @@ public class SecurityPassword  extends JFrame {
                         String s3=t3.getText();
                         String s4=t4.getText();
                         String s5=t5.getText();
-                        String q1 = "insert into account values('"+s2+"','"+s1+"','"+s3+"','"+s4+"','"+s5+"')";
+                        String q1 = "insert into save_password values('"+s2+"','"+s1+"','"+s3+"','"+s4+"','"+s5+"')";
                         c.stm.executeUpdate(q1);
                         JOptionPane.showMessageDialog(null, "Password details updated Successfully");
                         setVisible(false);

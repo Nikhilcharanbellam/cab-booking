@@ -34,7 +34,7 @@ public class ViewBookedCab extends JFrame {
 	}
 
 	public ViewBookedCab(String username)  {
-		setBounds(450, 220, 1050, 600);
+		setBounds(75, 75, 1050, 600);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -144,7 +144,7 @@ public class ViewBookedCab extends JFrame {
                 ConnectionClass c = new ConnectionClass();
                 try{
 
-                    ResultSet rs = c.stm.executeQuery("select * from intraCab where username = '"+username+"'");
+                    ResultSet rs = c.stm.executeQuery("select * from intracity_bookings where username = '"+username+"'");
                     while(rs.next()){
                         l2.setText(rs.getString(2));
                         l3.setText(rs.getString(3));
@@ -153,7 +153,7 @@ public class ViewBookedCab extends JFrame {
                         l9.setText(rs.getString(6));
                         l11.setText(rs.getString(7));
                     }
-                    rs = c.stm.executeQuery("select * from customer where username = '"+username+"'");
+                    rs = c.stm.executeQuery("select * from user_details where username = '"+username+"'");
                     while(rs.next()){
                         l1.setText(rs.getString("name"));
                         l6.setText(rs.getString("id_type") + " (" + rs.getString("number") + ")");

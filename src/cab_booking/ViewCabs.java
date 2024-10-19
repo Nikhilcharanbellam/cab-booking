@@ -76,7 +76,7 @@ public class ViewCabs extends JFrame implements Runnable {
 
     public ViewCabs() {
 
-        setBounds(500, 220, 900, 700);
+        setBounds(125, 15, 900, 650);
         getContentPane().setBackground(new Color(220, 250, 250));
         
         th = new Thread(this);

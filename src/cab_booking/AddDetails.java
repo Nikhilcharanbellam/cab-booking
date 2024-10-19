@@ -33,7 +33,7 @@ public class AddDetails extends JFrame {
 	}
 	public AddDetails(String username) throws SQLException {
 		System.out.println(username);
-                setBounds(500, 220, 850, 550);
+                setBounds(75, 75, 850, 550);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);               
@@ -153,7 +153,7 @@ t5.setColumns(10);
 
  try{
                     ConnectionClass cc = new ConnectionClass();
-                    ResultSet rs = cc.stm.executeQuery("select * from customer where username = '"+username+"'");
+                    ResultSet rs = cc.stm.executeQuery("select * from signup where username = '"+username+"'");
                     while(rs.next()){
                         t7.setText(rs.getString("username"));  
                         t4.setText(rs.getString("name"));
@@ -173,7 +173,7 @@ t5.setColumns(10);
                         String s7=t7.getText();
                         String s8=t8.getText();
                         String s9=t9.getText();
-                        String q1 = "insert into customer values('"+s1+"','"+s2+"','"+s3+"','"+s4+"','"+s5+"','"+s6+"','"+s7+"','"+s8+"','"+s9+"')";
+                        String q1 = "insert into user_details values('"+s1+"','"+s2+"','"+s3+"','"+s4+"','"+s5+"','"+s6+"','"+s7+"','"+s8+"','"+s9+"')";
                         c.stm.executeUpdate(q1);
                     }catch(SQLException e1){   
                     }
